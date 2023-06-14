@@ -1,0 +1,15 @@
+br\unipar\bancopoo\models\Pais.class
+br\unipar\bancopoo\services\PessoaJuridicaService.class
+br\unipar\bancopoo\models\PessoaFisica.class
+br\unipar\bancopoo\exceptions\CaracteresInvalidosException.class
+br\unipar\bancopoo\models\Estado.class
+br\unipar\bancopoo\models\Endereco.class
+br\unipar\bancopoo\models\Cidade.class
+br\unipar\bancopoo\models\Pessoa.class
+br\unipar\bancopoo\services\PessoaFisicaService.class
+br\unipar\bancopoo\models\Telefone.class
+br\unipar\bancopoo\models\PessoaJuridica.class
+br\unipar\bancopoo\services\EstadoService.class
+br\unipar\bancopoo\exceptions\MaximoTamanhoException.class
+br\unipar\bancopoo\exceptions\EntidadeInvalidoException.class
+br\unipar\bancopoo\exceptions\CampoNaoInformadaException.class
