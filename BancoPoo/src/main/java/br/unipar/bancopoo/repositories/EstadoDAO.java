@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EstadoDAO implements PrincipalDAO{
+public class EstadoDAO{
     private static final String INSERT = 
             "INSERT INTO estado (id,nome,sigla,ra,pais_id) VALUES(?,?,?,?,?)";
     

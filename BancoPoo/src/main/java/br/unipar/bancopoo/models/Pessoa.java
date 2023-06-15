@@ -2,7 +2,7 @@ package br.unipar.bancopoo.models;
 
 import java.util.ArrayList;
 
-public abstract class Pessoa extends AbstractBaseEntity{
+public class Pessoa extends AbstractBaseEntity{
     private String email;
 
     public Pessoa() {

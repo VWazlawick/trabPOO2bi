@@ -1,9 +1,6 @@
 package br.unipar.bancopoo.repositories;
 
-import br.unipar.bancopoo.models.AbstractBaseEntity;
-import br.unipar.bancopoo.models.Cidade;
-import br.unipar.bancopoo.models.Estado;
-import br.unipar.bancopoo.models.Pais;
+import br.unipar.bancopoo.models.Banco;
 import br.unipar.bancopoo.utils.DataBaseUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,30 +9,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class CidadeDAO{
-    private static final String INSERT =
-            "INSERT INTO cidade(id,nome,ra,estado_id) VALUES (?,?,?,?)";
-    private static final String UPDATE =
-            "UPDATE cidade SET nome=?,ra=?,estado_id=? WHERE id=?";
-    private static final String DELETE =
-            "DELETE cidade WHERE id=?";
-    private static final String FIND_ALL =
-            "SELECT id,nome,ra,estado_id FROM cidade";
-    private static final String FIND_BY_ID =
-            "SELECT id,nome,ra,estado_id FROM cidade WHERE id=?";
+public class BancoDAO {
+    public static final String INSERT = "INSERT INTO banco(id,nome,ra) VALUES (?,?,?)";
+    public static final String UPDATE = "UPDATE banco SET nome=?,ra=? WHERE id=?";
+    public static final String DELETE = "DELETE FROM banco WHERE id=?";
+    public static final String FIND_ALL = "SELECT id,nome,ra FROM banco";
+    public static final String FIND_BY_ID = "SELECT nome,ra FROM banco WHERE id=?";
     
-    public void insert(Cidade cidade) throws SQLException{
+    public void insert(Banco banco)throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
         
         try {
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(INSERT);
-            pstmt.setInt(1, cidade.getId());
-            pstmt.setString(2, cidade.getNmCidade());
-            pstmt.setString(3, cidade.getRa());
-            pstmt.setInt(4, cidade.getEstado().getId());
+            
+            pstmt.setInt(1, banco.getId());
+            pstmt.setString(2, banco.getNmBanco());
+            pstmt.setString(3, banco.getRa());
             
             pstmt.executeUpdate();
         } finally {
@@ -47,17 +38,17 @@ public class CidadeDAO{
             }
         }
     }
-    public void update(Cidade cidade) throws SQLException{
+    public void update(Banco banco) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
         
         try {
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(UPDATE);
-            pstmt.setString(1, cidade.getNmCidade());
-            pstmt.setString(2, cidade.getRa());
-            pstmt.setInt(3, cidade.getEstado().getId());
-            pstmt.setInt(4, cidade.getId());
+            
+            pstmt.setString(1, banco.getNmBanco());
+            pstmt.setString(2, banco.getRa());
+            pstmt.setInt(3, banco.getId());
             
             pstmt.executeUpdate();
         } finally {
@@ -69,7 +60,7 @@ public class CidadeDAO{
             }
         }
     }
-    public void delete(int id) throws SQLException{
+     public void delete(int id) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
         
@@ -78,7 +69,7 @@ public class CidadeDAO{
             pstmt = conn.prepareStatement(DELETE);
             pstmt.setInt(1, id);
             
-            pstmt.executeUpdate();            
+            pstmt.executeUpdate();
         } finally {
             if(pstmt!=null){
                 pstmt.close();
@@ -88,12 +79,11 @@ public class CidadeDAO{
             }
         }
     }
-    
-    public List<Cidade> findAll() throws SQLException{
-        ArrayList<Cidade> retorno = new ArrayList<>();
+     public List findAll() throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        ArrayList<Banco> retorno = null;
         
         try {
             conn = new DataBaseUtils().getConnection();
@@ -101,17 +91,16 @@ public class CidadeDAO{
             rs = pstmt.executeQuery();
             
             while(rs.next()){
-                Cidade cidade = new Cidade();
-                cidade.setId(rs.getInt("id"));
-                cidade.setNmCidade(rs.getString("nome"));
-                cidade.setRa(rs.getString("ra"));
+                retorno = new ArrayList<>();
+                Banco banco = new Banco();
                 
-                EstadoDAO estadoDAO = new EstadoDAO();
-                Estado estado = estadoDAO.findById(rs.getInt("pais_id"));
-                cidade.setEstado(estado);
-                
-                retorno.add(cidade);
-            }            
+                banco.setId(rs.getInt("int"));
+                banco.setNmBanco(rs.getString("nome"));
+                banco.setRa(rs.getString("ra"));
+ 
+                retorno.add(banco);
+            }
+            
         } finally {
             if(pstmt!=null){
                 pstmt.close();
@@ -119,17 +108,14 @@ public class CidadeDAO{
             if(conn!=null){
                 conn.close();
             }
-            if(rs!=null){
-                rs.close();
-            }
         }
-        return retorno;        
+        return retorno;
     }
-    public Cidade findById(int id)throws SQLException{
+    public Banco findById(int id) throws SQLException{
         Connection conn = null;
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt = null; 
         ResultSet rs = null;
-        Cidade retorno = null;
+        Banco retorno = null;
         
         try {
             conn = new DataBaseUtils().getConnection();
@@ -138,13 +124,10 @@ public class CidadeDAO{
             rs = pstmt.executeQuery();
             
             while(rs.next()){
-                retorno = new Cidade();
-                retorno.setId(rs.getInt("id"));
-                retorno.setNmCidade(rs.getString("nome"));
+                retorno = new Banco();
+                retorno.setNmBanco(rs.getString("nome"));
                 retorno.setRa(rs.getString("ra"));
-                retorno.setEstado(new EstadoDAO().findById(rs.getInt("estado_id")));
             }
-            
         } finally {
             if(pstmt!=null){
                 pstmt.close();
@@ -158,6 +141,4 @@ public class CidadeDAO{
         }
         return retorno;
     }
-
-    
 }

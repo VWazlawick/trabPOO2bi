@@ -3,8 +3,13 @@ package br.unipar.bancopoo.services;
 import br.unipar.bancopoo.exceptions.CampoNaoInformadaException;
 import br.unipar.bancopoo.exceptions.CaracteresInvalidosException;
 import br.unipar.bancopoo.exceptions.EntidadeInvalidoException;
+import br.unipar.bancopoo.exceptions.IdInvalidoException;
 import br.unipar.bancopoo.exceptions.MaximoTamanhoException;
+import br.unipar.bancopoo.exceptions.NaoEncontradoException;
 import br.unipar.bancopoo.models.PessoaJuridica;
+import br.unipar.bancopoo.repositories.PessoaJuridicaDAO;
+import java.sql.SQLException;
+import java.util.List;
 
 public class PessoaJuridicaService {
 
@@ -45,5 +50,36 @@ public class PessoaJuridicaService {
         if(pessoaJuridica.getRazaoSocial().length()>128){
             throw new MaximoTamanhoException("Razão Social", 128);
         }
+    }
+    public List<PessoaJuridica> findAll()throws SQLException{
+        PessoaJuridicaDAO pessoaJuridicaDAO = new PessoaJuridicaDAO();
+        List<PessoaJuridica> retorno = pessoaJuridicaDAO.findAll();
+        return retorno;
+    }
+    public PessoaJuridica findById(int id) throws SQLException, IdInvalidoException, NaoEncontradoException{
+        if(id<=0){
+            throw new IdInvalidoException("Pessoa Fisica");
+        }
+        PessoaJuridicaDAO pessoaJuridicaDAO = new PessoaJuridicaDAO();
+        PessoaJuridica retorno = pessoaJuridicaDAO.findById(id);
+        
+        if(retorno == null){
+            throw new NaoEncontradoException("Pessoa Fisica");
+        }
+        return retorno;
+    }
+     public void insert(PessoaJuridica pessoaJuridica) throws EntidadeInvalidoException, SQLException, CampoNaoInformadaException, MaximoTamanhoException, CaracteresInvalidosException{
+        validar(pessoaJuridica);
+        PessoaJuridicaDAO pessoaFisicaDAO = new PessoaJuridicaDAO();
+        pessoaFisicaDAO.insert(pessoaJuridica);
+    }
+    public void update(PessoaJuridica pessoaJuridica)throws SQLException, EntidadeInvalidoException, CampoNaoInformadaException, MaximoTamanhoException, CaracteresInvalidosException{
+        validar(pessoaJuridica);
+        PessoaJuridicaDAO pessoaFisicaDAO = new PessoaJuridicaDAO();
+        pessoaFisicaDAO.update(pessoaJuridica);
+    }
+    public void delete(int id) throws SQLException{
+        PessoaJuridicaDAO pessoaFisicaDAO = new PessoaJuridicaDAO();
+        pessoaFisicaDAO.delete(id);
     }
 }

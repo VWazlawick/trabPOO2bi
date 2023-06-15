@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnderecoDAO implements PrincipalDAO{
+public class EnderecoDAO{
 
     private static final String INSERT = "INSERT INTO endereco"
             + "(logradouro,numero,bairro,cep,complemento,ra,pessoa_id,cidade_id) VALUES (?,?,?,?,?,?,?,?)";
@@ -22,7 +22,6 @@ public class EnderecoDAO implements PrincipalDAO{
     private static final String FIND_ALL = "SELECT id,logradouro,numero,bairro,cep,complemento,ra,pessoa_id,cidade_id,"
             + " FROM endereco";
     
-    @Override
     public List<Endereco> findAll() throws SQLException {
         ArrayList<Endereco> retorno = new ArrayList<>();
         Connection conn = null;
@@ -65,7 +64,6 @@ public class EnderecoDAO implements PrincipalDAO{
         return retorno;
     }
 
-    @Override
     public Endereco findById(int id) throws SQLException {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -161,7 +159,6 @@ public class EnderecoDAO implements PrincipalDAO{
         }
     }
 
-    @Override
     public void delete(int id) throws SQLException {
         Connection conn = null;
         PreparedStatement pstmt = null;

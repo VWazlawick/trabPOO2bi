@@ -1,34 +1,35 @@
 package br.unipar.bancopoo.repositories;
 
-import br.unipar.bancopoo.models.AbstractBaseEntity;
-import br.unipar.bancopoo.models.Pessoa;
+import br.unipar.bancopoo.models.PessoaFisica;
 import br.unipar.bancopoo.utils.DataBaseUtils;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PessoaDAO{
+public class PessoaFisicaDAO {
 
-    public static final String INSERT = "INSERT INTO pessoa(email,ra) VALUES (?,?)";
-    public static final String UPDATE = "UPDATE pessoa SET email=?, ra=? WHERE id =?";
-    public static final String FIND_BY_ID = "SELECT id,email,ra FROM pessoa WHERE id = ?";
-    public static final String FIND_ALL = "SELECT id,email,ra FROM pessoa";
-    public static final String DELETE = "DELETE FROM pessoa WHERE id=?";
+    public static final String INSERT = "INSERT INTO pessoafisica(nome,cpf,rg,datanascimento,pessoa_id) VALUES"
+            + "(?,?,?,?,?)";
+    public static final String UPDATE = "UPDATE pessoafisica SET nome=?,cpf=?,rg=?,datanascimento=? WHERE pessoa_id =?";
+    public static final String DELETE = "DELETE FROM pessoafisica WHERE pessoa_id = ?";
+    public static final String FIND_ALL = "SELECT nome,cpf,rg,datanascimento,pessoa_id FROM pessoafisica";
+    public static final String FIND_BY_ID = "SEELECT nome,cpf,rg,datanascimento FROM pessoafisica WHERE pessoa_id = ?";
     
-    public void insert(Pessoa pessoa) throws SQLException{
+    public void insert(PessoaFisica pessoaFisica) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
         
         try {
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(INSERT);
-            
-            pstmt.setString(1, pessoa.getEmail());
-            pstmt.setString(2, pessoa.getRa());
+            pstmt.setString(1, pessoaFisica.getNmPessoa());
+            pstmt.setString(2, pessoaFisica.getCpf());
+            pstmt.setString(3, pessoaFisica.getRg());
+            pstmt.setString(4, pessoaFisica.getDtnasc());
+            pstmt.setInt(5, pessoaFisica.getId());
             
             pstmt.executeUpdate();
         } finally {
@@ -41,7 +42,7 @@ public class PessoaDAO{
         }
     }
     
-    public void update(Pessoa pessoa) throws SQLException{
+    public void update(PessoaFisica pessoaFisica) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
         
@@ -49,41 +50,13 @@ public class PessoaDAO{
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(UPDATE);
             
-            pstmt.setString(1, pessoa.getEmail());
-            pstmt.setString(2, pessoa.getRa());
-            pstmt.setInt(3, pessoa.getId());
+            pstmt.setString(1, pessoaFisica.getNmPessoa());
+            pstmt.setString(2, pessoaFisica.getCpf());
+            pstmt.setString(3, pessoaFisica.getRg());
+            pstmt.setString(4, pessoaFisica.getDtnasc());
+            pstmt.setInt(5, pessoaFisica.getId());
             
             pstmt.executeUpdate();
-        }finally{
-            if(pstmt!=null){
-                pstmt.close();
-            }
-            if(conn!=null){
-                conn.close();
-            }
-        }
-    }
-    
-    public List findAll() throws SQLException {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        ArrayList<Pessoa> retorno = null;
-        try {
-            conn = new DataBaseUtils().getConnection();
-            pstmt = conn.prepareStatement(FIND_ALL);
-            rs = pstmt.executeQuery();
-            
-            while(rs.next()){
-                retorno = new ArrayList<>();
-                Pessoa pessoa = new Pessoa();
-                
-                pessoa.setId(rs.getInt("id"));
-                pessoa.setEmail(rs.getString("email"));
-                pessoa.setRa(rs.getString("ra"));
-                
-                retorno.add(pessoa);
-            }
         } finally {
             if(pstmt!=null){
                 pstmt.close();
@@ -91,18 +64,48 @@ public class PessoaDAO{
             if(conn!=null){
                 conn.close();
             }
-            if(rs!=null){
-                rs.close();
+        }
+    }
+    public List findAll() throws SQLException{
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<PessoaFisica> retorno = null;
+        
+        try {
+            conn = new DataBaseUtils().getConnection();
+            pstmt = conn.prepareStatement(FIND_ALL);
+            rs = pstmt.executeQuery();
+            
+            while(rs.next()){
+                retorno = new ArrayList<>();
+                PessoaFisica pessoaFisica = new PessoaFisica();
+                
+                pessoaFisica.setNmPessoa(rs.getString("nome"));
+                pessoaFisica.setCpf(rs.getString("cpf"));
+                pessoaFisica.setRg(rs.getString("rg"));
+                pessoaFisica.setDtnasc(rs.getString("datanascimento"));
+                pessoaFisica.setId(rs.getInt("pessoa_id"));
+                
+                retorno.add(pessoaFisica);
+            }
+            
+        } finally {
+            if(pstmt!=null){
+                pstmt.close();
+            }
+            if(conn!=null){
+                conn.close();
             }
         }
         return retorno;
     }
-
-    public Pessoa findById(int id) throws SQLException {
+    
+    public PessoaFisica findById(int id) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        Pessoa retorno = null;
+        PessoaFisica retorno = null;
         
         try {
             conn = new DataBaseUtils().getConnection();
@@ -111,11 +114,11 @@ public class PessoaDAO{
             rs = pstmt.executeQuery();
             
             while(rs.next()){
-                retorno = new Pessoa();
-                retorno.setId(rs.getInt("id"));
-                retorno.setEmail(rs.getString("email"));
-                retorno.setRa(rs.getString("ra"));
-                            
+                retorno = new PessoaFisica();
+                retorno.setNmPessoa(rs.getString("nome"));
+                retorno.setCpf(rs.getString("cpf"));
+                retorno.setRg(rs.getString("rg"));
+                retorno.setDtnasc(rs.getString("datanascimento"));
             }
         } finally {
             if(pstmt!=null){
@@ -130,8 +133,7 @@ public class PessoaDAO{
         }
         return retorno;
     }
-
-    public void delete(int id) throws SQLException {
+    public void delete(int id) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
         
@@ -150,5 +152,4 @@ public class PessoaDAO{
             }
         }
     }
-    
 }

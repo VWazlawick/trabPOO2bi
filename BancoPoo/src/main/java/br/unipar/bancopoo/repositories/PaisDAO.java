@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class PaisDAO implements PrincipalDAO{
+public class PaisDAO{
 
     private static final String INSERT = "INSERT INTO PAIS(id,nome,sigla,ra)"+
         "VALUES(?,?,?,?)";
@@ -25,7 +25,6 @@ public class PaisDAO implements PrincipalDAO{
     
     private static final String UPDATE = "UPDATE pais SET nome=?,sigla=?,ra=? WHERE id =?";
     
-    @Override
     public List<Pais> findAll() throws SQLException{
         ArrayList<Pais> retorno = new ArrayList<>();
         Connection conn = null; 
@@ -140,7 +139,7 @@ public class PaisDAO implements PrincipalDAO{
             }
         }
     }
-    @Override
+
     public void delete(int id)throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
