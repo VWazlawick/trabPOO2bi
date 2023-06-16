@@ -1,19 +1,21 @@
 package br.unipar.bancopoo.models;
 
+import br.unipar.bancopoo.Enums.OperadoraEnum;
+
 public class Telefone extends AbstractBaseEntity{
     private String nrTelefone;
-    private Operadora operadora;
+    private OperadoraEnum operadora;
     private Pessoa pessoa;
     private Agencia agencia;
 
     public Telefone() {
     }
 
-    public Operadora getOperadora() {
+    public OperadoraEnum getOperadora() {
         return operadora;
     }
 
-    public void setOperadora(Operadora operadora) {
+    public void setOperadora(OperadoraEnum operadora) {
         this.operadora = operadora;
     }
 
