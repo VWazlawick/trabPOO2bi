@@ -18,8 +18,7 @@ public class PaisDAO{
     
     private static final String FIND_ALL = "SELECT id,nome,sigla,ra FROM pais";
     
-    private static final String FIND_BY_ID = "SELECT id,nome,sigla,ra FROM pais"
-            + "WHERE id = ?";
+    private static final String FIND_BY_ID = "SELECT id,nome,sigla,ra FROM pais WHERE id = ?";
     
     private static final String DELETE_BY_ID = "DELETE FROM pais WHERE id = ?";
     
@@ -75,10 +74,10 @@ public class PaisDAO{
             
             while(rs.next()){
                 retorno = new Pais();
-                retorno.setId(rs.getInt("ID"));
-                retorno.setNmPais(rs.getString("NOME"));
-                retorno.setRa(rs.getString("RA"));
-                retorno.setSgPais(rs.getString("SIGLA"));
+                retorno.setId(rs.getInt("id"));
+                retorno.setNmPais(rs.getString("nome"));
+                retorno.setSgPais(rs.getString("sigla"));
+                retorno.setRa(rs.getString("ra"));
             }
         } finally {
             

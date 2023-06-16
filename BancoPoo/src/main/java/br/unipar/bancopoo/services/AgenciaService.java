@@ -43,6 +43,9 @@ public class AgenciaService {
         if(agencia.getRa().length()!=8){
             throw new CaracteresInvalidosException("RA", 8);
         }
+        if(agencia.getBanco()==null){
+            throw new CampoNaoInformadaException("Banco");
+        }
     }
     public List findAll() throws SQLException{
         AgenciaDAO agenciaDAO = new AgenciaDAO();

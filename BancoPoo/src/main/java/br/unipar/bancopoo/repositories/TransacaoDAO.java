@@ -1,7 +1,6 @@
 package br.unipar.bancopoo.repositories;
 
-import br.unipar.bancopoo.Enums.TipoContaEnum;
-import br.unipar.bancopoo.models.Conta;
+import br.unipar.bancopoo.Enums.TipoTransacaoEnum;
 import br.unipar.bancopoo.models.Transacao;
 import br.unipar.bancopoo.utils.DataBaseUtils;
 import java.sql.Connection;
@@ -102,24 +101,21 @@ public class TransacaoDAO {
             
             while(rs.next()){
                 retorno = new ArrayList<>();
-                Transacao transacao = new Tramsacao();
+                Transacao transacao = new Transacao();
                 
-                conta.setId(rs.getInt("id"));
-                conta.setNrConta(rs.getString("numero"));
-                conta.setDigito(rs.getString("digito"));
-                conta.setSaldo(rs.getDouble("saldo"));
-                if(rs.getString("tipo").equals("1")){
-                    conta.setTipo(TipoContaEnum.CONTA_CORRENTE);
-                }else if(rs.getString("tipo").equals("2")){
-                    conta.setTipo(TipoContaEnum.POUPANCA);
-                }else if(rs.getString("tipo").equals("3")){
-                    conta.setTipo(TipoContaEnum.SALARIO);
+                transacao.setId(rs.getInt("id"));
+                transacao.setDhTransacao(rs.getDate("datahora"));
+                transacao.setValor(rs.getDouble("valor"));
+                if(rs.getInt("tipo") == 1){
+                    transacao.setTipo(TipoTransacaoEnum.PIX);
+                }else if(rs.getInt("tipo")==2){
+                    transacao.setTipo(TipoTransacaoEnum.TRANSFERENCIA);
                 }
-                conta.setRa(rs.getString("ra"));
-                conta.setAgencia(new AgenciaDAO().findById(rs.getInt("agencia_id")));
-                conta.setPessoa(new PessoaDAO().findById(rs.getInt("pessoa_id")));
+                transacao.setRa(rs.getString("ra"));
+                transacao.setContaOrigem(new ContaDAO().findById(rs.getInt("conta_origem")));
+                transacao.setContaDestino(new ContaDAO().findById(rs.getInt("conta_destino")));
                 
-                retorno.add(conta);
+                retorno.add(transacao);
             }
             
         } finally {
@@ -132,11 +128,11 @@ public class TransacaoDAO {
         }
         return retorno;
     }
-    public Conta findById(int id) throws SQLException{
+    public Transacao findById(int id) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null; 
         ResultSet rs = null;
-        Conta retorno = null;
+        Transacao retorno = null;
         
         try {
             conn = new DataBaseUtils().getConnection();
@@ -145,21 +141,18 @@ public class TransacaoDAO {
             rs = pstmt.executeQuery();
             
             while(rs.next()){
-                retorno = new Conta();
+                retorno = new Transacao();
                 
-                retorno.setNrConta(rs.getString("numero"));
-                retorno.setDigito(rs.getString("digito"));
-                retorno.setSaldo(rs.getDouble("saldo"));
-                if(rs.getString("tipo").equals("1")){
-                    retorno.setTipo(TipoContaEnum.CONTA_CORRENTE);
-                }else if(rs.getString("tipo").equals("2")){
-                    retorno.setTipo(TipoContaEnum.POUPANCA);
-                }else if(rs.getString("tipo").equals("3")){
-                    retorno.setTipo(TipoContaEnum.SALARIO);
+                retorno.setDhTransacao(rs.getDate("datahora"));
+                retorno.setValor(rs.getDouble("valor"));
+                if(rs.getInt("tipo") == 1){
+                    retorno.setTipo(TipoTransacaoEnum.PIX);
+                }else if(rs.getInt("tipo")==2){
+                    retorno.setTipo(TipoTransacaoEnum.TRANSFERENCIA);
                 }
                 retorno.setRa(rs.getString("ra"));
-                retorno.setAgencia(new AgenciaDAO().findById(rs.getInt("agencia_id")));
-                retorno.setPessoa(new PessoaDAO().findById(rs.getInt("pessoa_id")));
+                retorno.setContaOrigem(new ContaDAO().findById(rs.getInt("conta_origem")));
+                retorno.setContaDestino(new ContaDAO().findById(rs.getInt("conta_destino")));
             }
         } finally {
             if(pstmt!=null){

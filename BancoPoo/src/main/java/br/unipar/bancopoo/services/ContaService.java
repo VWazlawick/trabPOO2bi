@@ -32,6 +32,12 @@ public class ContaService {
         if(conta.getRa().length()!=8){
             throw new CaracteresInvalidosException("RA", 8);
         }
+        if(conta.getPessoa()==null){
+            throw new CampoNaoInformadaException("Pessoa");
+        }
+        if(conta.getAgencia()==null){
+            throw new CampoNaoInformadaException("Agencia");
+        }
     }
     public List findAll() throws SQLException{
         ContaDAO contaDAO = new ContaDAO();

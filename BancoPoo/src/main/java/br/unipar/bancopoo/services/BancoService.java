@@ -29,6 +29,9 @@ public class BancoService {
         if(banco.getNmBanco().length()>60){
             throw new MaximoTamanhoException("Nome do banco", 60);
         }
+        if(banco.getId()<=0){
+            throw new CampoNaoInformadaException("ID");
+        }
     }
     public List findAll()throws SQLException{
         BancoDAO bancoDAO = new BancoDAO();

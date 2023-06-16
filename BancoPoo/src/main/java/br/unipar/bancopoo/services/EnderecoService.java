@@ -38,6 +38,9 @@ public class EnderecoService {
         if(endereco.getRa().length()!=8){
             throw new CaracteresInvalidosException("RA", 6);
         }
+        if(endereco.getPessoa()==null){
+            throw new CampoNaoInformadaException("Cidade");
+        }
     }
     public List<Endereco> findAll() throws SQLException{
         EnderecoDAO enderecoDAO = new EnderecoDAO();

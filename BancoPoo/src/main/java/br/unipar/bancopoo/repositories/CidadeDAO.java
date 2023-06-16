@@ -105,10 +105,7 @@ public class CidadeDAO{
                 cidade.setId(rs.getInt("id"));
                 cidade.setNmCidade(rs.getString("nome"));
                 cidade.setRa(rs.getString("ra"));
-                
-                EstadoDAO estadoDAO = new EstadoDAO();
-                Estado estado = estadoDAO.findById(rs.getInt("pais_id"));
-                cidade.setEstado(estado);
+                cidade.setEstado(new EstadoDAO().findById(rs.getInt("estado_id")));
                 
                 retorno.add(cidade);
             }            

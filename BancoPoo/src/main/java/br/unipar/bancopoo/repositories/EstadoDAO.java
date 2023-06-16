@@ -137,7 +137,6 @@ public class EstadoDAO{
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
         try {
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(FIND_ALL);
@@ -149,10 +148,7 @@ public class EstadoDAO{
                 estado.setNmEstado(rs.getString("nome"));
                 estado.setSgEstado(rs.getString("sigla"));
                 estado.setRa(rs.getString("ra"));
-                
-                PaisDAO paisDAO = new PaisDAO();
-                Pais pais = paisDAO.findById(rs.getInt("pais_id"));
-                estado.setPais(pais);
+                estado.setPais(new PaisDAO().findById(rs.getInt("pais_id")));
 
                 retorno.add(estado);
             }

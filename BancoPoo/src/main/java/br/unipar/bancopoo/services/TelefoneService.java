@@ -26,6 +26,12 @@ public class TelefoneService {
         if(telefone.getRa().length()!=8){
             throw new CaracteresInvalidosException("RA", 8);
         }
+        if(telefone.getPessoa()==null && telefone.getAgencia()==null){
+            throw new CampoNaoInformadaException("Pessoa/Agencia");
+        }
+        if(telefone.getOperadora()==null){
+            throw new CampoNaoInformadaException("Operadora");
+        }
     }
     public List findAll() throws SQLException{
         TelefoneDAO telefoneDAO = new TelefoneDAO();

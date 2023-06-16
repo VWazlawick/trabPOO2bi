@@ -13,7 +13,7 @@ import java.util.List;
         
 public class CidadeService {
 
-    public void validar(Cidade cidade) throws EntidadeInvalidoException, CampoNaoInformadaException, MaximoTamanhoException, CaracteresInvalidosException{
+    public void validar(Cidade cidade) throws EntidadeInvalidoException, CampoNaoInformadaException, MaximoTamanhoException, CaracteresInvalidosException, IdInvalidoException{
         if(cidade==null){
             throw new EntidadeInvalidoException("Cidade");
         }
@@ -28,6 +28,9 @@ public class CidadeService {
         }
         if(cidade.getRa().length()!=8){
             throw new CaracteresInvalidosException("RA", 8);
+        }
+        if(cidade.getId()<=0){
+            throw new CampoNaoInformadaException("ID");
         }
     }
     public List<Cidade> findAll() throws SQLException{
@@ -46,12 +49,12 @@ public class CidadeService {
         }
         return retorno;
     }
-    public void insert(Cidade cidade) throws EntidadeInvalidoException, CampoNaoInformadaException, MaximoTamanhoException, CaracteresInvalidosException, SQLException{
+    public void insert(Cidade cidade) throws EntidadeInvalidoException, CampoNaoInformadaException, MaximoTamanhoException, CaracteresInvalidosException, SQLException, IdInvalidoException{
         validar(cidade);
         CidadeDAO cidadeDAO = new CidadeDAO();
         cidadeDAO.insert(cidade);
     }
-    public void update(Cidade cidade) throws EntidadeInvalidoException, CampoNaoInformadaException, MaximoTamanhoException, CaracteresInvalidosException, SQLException{
+    public void update(Cidade cidade) throws EntidadeInvalidoException, CampoNaoInformadaException, MaximoTamanhoException, CaracteresInvalidosException, SQLException, IdInvalidoException{
         validar(cidade);
         CidadeDAO cidadeDAO = new CidadeDAO();
         cidadeDAO.update(cidade);

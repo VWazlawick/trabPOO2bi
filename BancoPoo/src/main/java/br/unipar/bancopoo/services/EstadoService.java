@@ -13,7 +13,7 @@ import java.util.List;
 
 public class EstadoService {
 
-    public void validar(Estado estado) throws EntidadeInvalidoException, CampoNaoInformadaException, CaracteresInvalidosException, MaximoTamanhoException{
+    public void validar(Estado estado) throws EntidadeInvalidoException, CampoNaoInformadaException, CaracteresInvalidosException, MaximoTamanhoException, IdInvalidoException{
        if(estado==null){
            throw new EntidadeInvalidoException("Estado");           
        }
@@ -35,6 +35,9 @@ public class EstadoService {
        if(estado.getRa().length()!=8){
             throw new CaracteresInvalidosException("RA", 8);
         }
+       if(estado.getId()<=0){
+           throw new CampoNaoInformadaException("ID");
+       }
     }
     public List<Estado> findAll() throws SQLException{
         EstadoDAO estadoDAO = new EstadoDAO();
@@ -58,13 +61,13 @@ public class EstadoService {
         return retorno;
     }
     
-    public void insert(Estado estado) throws SQLException, EntidadeInvalidoException, CampoNaoInformadaException, CaracteresInvalidosException, MaximoTamanhoException{
+    public void insert(Estado estado) throws SQLException, EntidadeInvalidoException, CampoNaoInformadaException, CaracteresInvalidosException, MaximoTamanhoException, IdInvalidoException{
         validar(estado);
         EstadoDAO estadoDAO = new EstadoDAO();
         estadoDAO.insert(estado);
     }
     
-    public void update(Estado estado) throws SQLException, CampoNaoInformadaException, EntidadeInvalidoException, CaracteresInvalidosException, MaximoTamanhoException{
+    public void update(Estado estado) throws SQLException, CampoNaoInformadaException, EntidadeInvalidoException, CaracteresInvalidosException, MaximoTamanhoException, IdInvalidoException{
         validar(estado);
         EstadoDAO estadoDAO = new EstadoDAO();
         estadoDAO.update(estado);

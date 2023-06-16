@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PaisService {
 
-    public void validar(Pais pais) throws CampoNaoInformadaException, EntidadeInvalidoException, CaracteresInvalidosException, MaximoTamanhoException{
+    public void validar(Pais pais) throws CampoNaoInformadaException, EntidadeInvalidoException, CaracteresInvalidosException, MaximoTamanhoException, IdInvalidoException{
         if(pais==null){
             throw new CampoNaoInformadaException("Pais");
         }
@@ -32,7 +32,9 @@ public class PaisService {
         if(pais.getRa().length()!=8){
             throw new CaracteresInvalidosException("RA", 8);
         }
-           
+        if(pais.getId()<=0){
+            throw new CampoNaoInformadaException("ID");
+        }
     }
     public List<Pais> findAll() throws SQLException{
         PaisDAO paisDAO = new PaisDAO();
@@ -54,12 +56,12 @@ public class PaisService {
        }
        return retorno;
     }
-    public void insert(Pais pais) throws SQLException, CampoNaoInformadaException, EntidadeInvalidoException,CaracteresInvalidosException, MaximoTamanhoException{
+    public void insert(Pais pais) throws SQLException, CampoNaoInformadaException, EntidadeInvalidoException,CaracteresInvalidosException, MaximoTamanhoException, IdInvalidoException{
         validar(pais);
         PaisDAO paisDAO = new PaisDAO();
         paisDAO.insert(pais);
     }
-    public void update(Pais pais) throws SQLException, CampoNaoInformadaException,EntidadeInvalidoException, CaracteresInvalidosException, MaximoTamanhoException{
+    public void update(Pais pais) throws SQLException, CampoNaoInformadaException,EntidadeInvalidoException, CaracteresInvalidosException, MaximoTamanhoException, IdInvalidoException{
         validar(pais);
         PaisDAO paisDAO = new PaisDAO();
         paisDAO.update(pais);
