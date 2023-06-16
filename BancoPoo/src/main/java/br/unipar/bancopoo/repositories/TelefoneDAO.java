@@ -103,7 +103,7 @@ public class TelefoneDAO {
                 retorno = new ArrayList<>();
                 Telefone telefone = new Telefone();
                 
-                telefone.setId(rs.getInt("int"));
+                telefone.setId(rs.getInt("id"));
                 telefone.setNrTelefone(rs.getString("numero"));
                 if(rs.getString("operadora")=="41"){
                     telefone.setOperadora(OperadoraEnum.TIM);
@@ -114,7 +114,7 @@ public class TelefoneDAO {
                 }else if(rs.getString("operadora")=="31"){
                     telefone.setOperadora(OperadoraEnum.OI);
                 }
-                telefone.setAgencia(new AgenciaDAO().findById(rs.getInt("agencia_od")));
+                telefone.setAgencia(new AgenciaDAO().findById(rs.getInt("agencia_id")));
                 telefone.setPessoa(new  PessoaDAO().findById(rs.getInt("pessoa_id")));
                 
                 retorno.add(telefone);

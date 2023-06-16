@@ -1,31 +1,36 @@
 package br.unipar.bancopoo.models;
 
+import br.unipar.bancopoo.Enums.TipoTransacaoEnum;
+import java.sql.Date;
+
+
 public class Transacao extends AbstractBaseEntity{
-    private String tipo;
-    private String dhTransacao;
+
+    private Date dhTransacao;
     private double valor;
-    private Conta contaRemetente;
-    private Conta contaDestinatario;
+    private TipoTransacaoEnum tipo;
+    private Conta contaOrigem;
+    private Conta contaDestino;
 
     public Transacao() {
     }
 
-    public String getTipo() {
+    public TipoTransacaoEnum getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoTransacaoEnum tipo) {
         this.tipo = tipo;
     }
-
-    public String getDhTransacao() {
+    
+    public Date getDhTransacao() {
         return dhTransacao;
     }
 
-    public void setDhTransacao(String dhTransacao) {
+    public void setDhTransacao(Date dhTransacao) {
         this.dhTransacao = dhTransacao;
     }
-
+    
     public double getValor() {
         return valor;
     }
@@ -34,25 +39,26 @@ public class Transacao extends AbstractBaseEntity{
         this.valor = valor;
     }
 
-    public Conta getContaRemetente() {
-        return contaRemetente;
+    public Conta getContaOrigem() {
+        return contaOrigem;
     }
 
-    public void setContaRemetente(Conta contaRemetente) {
-        this.contaRemetente = contaRemetente;
+    public void setContaOrigem(Conta contaOrigem) {
+        this.contaOrigem = contaOrigem;
     }
 
-    public Conta getContaDestinatario() {
-        return contaDestinatario;
+    public Conta getContaDestino() {
+        return contaDestino;
     }
 
-    public void setContaDestinatario(Conta contaDestinatario) {
-        this.contaDestinatario = contaDestinatario;
+    public void setContaDestino(Conta contaDestino) {
+        this.contaDestino = contaDestino;
     }
 
     @Override
     public String toString() {
-        return "Transacao{" + "tipo=" + tipo + ", dhTransacao=" + dhTransacao + ", valor=" + valor + ", contaRemetente=" + contaRemetente + ", contaDestinatario=" + contaDestinatario + '}';
+        return "Transacao{" + "dhTransacao=" + dhTransacao + ", valor=" + valor + ", tipo=" + tipo + ", contaOrigem=" + contaOrigem + ", contaDestino=" + contaDestino + '}';
     }
-
+    
+    
 }

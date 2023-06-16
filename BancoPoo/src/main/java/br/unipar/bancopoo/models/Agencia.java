@@ -3,20 +3,29 @@ package br.unipar.bancopoo.models;
 import java.util.ArrayList;
 
 public class Agencia extends AbstractBaseEntity{
-    private int codigo;
+    private String codigo;
+    private String digito;
     private String razaoSocial;
     private String cnpj;
-    private ArrayList<Telefone> telefones;
     private Banco banco;
 
     public Agencia() {
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public Agencia(String codigo, String digito, String razaoSocial, String cnpj, Banco banco) {
+        this.codigo = codigo;
+        this.digito = digito;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.banco = banco;
+    }
+
+    
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
@@ -36,12 +45,12 @@ public class Agencia extends AbstractBaseEntity{
         this.cnpj = cnpj;
     }
 
-    public ArrayList<Telefone> getTelefones() {
-        return telefones;
+    public String getDigito() {
+        return digito;
     }
 
-    public void setTelefones(Telefone telefone) {
-        this.telefones.add(telefone);
+    public void setDigito(String digito) {
+        this.digito = digito;
     }
 
     public Banco getBanco() {
@@ -54,8 +63,10 @@ public class Agencia extends AbstractBaseEntity{
 
     @Override
     public String toString() {
-        return "Agencia{" + "codigo=" + codigo + ", razaoSocial=" + razaoSocial + ", cnpj=" + cnpj + ", telefones=" + telefones + ", banco=" + banco + '}';
+        return "Agencia{" + "codigo=" + codigo + ", digito=" + digito + ", razaoSocial=" + razaoSocial + ", cnpj=" + cnpj + ", banco=" + banco + '}';
     }
+
+    
 
    
 }

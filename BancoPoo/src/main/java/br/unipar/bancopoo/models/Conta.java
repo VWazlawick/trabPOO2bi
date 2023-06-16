@@ -1,15 +1,25 @@
 package br.unipar.bancopoo.models;
 
+import br.unipar.bancopoo.Enums.TipoContaEnum;
+
 public class Conta extends AbstractBaseEntity{
     private String nrConta;
-    private String agencia;
-    private int digito;
-    private String tipo;
+    private String digito;
+    private TipoContaEnum tipo;
     private double saldo;
-    private Banco banco;
+    private Agencia agencia;
     private Pessoa pessoa;
 
     public Conta() {
+    }
+
+    public Conta(String nrConta, String digito, TipoContaEnum tipo, double saldo, Agencia agencia, Pessoa pessoa) {
+        this.nrConta = nrConta;
+        this.digito = digito;
+        this.tipo = tipo;
+        this.saldo = saldo;
+        this.agencia = agencia;
+        this.pessoa = pessoa;
     }
 
     public String getNrConta() {
@@ -19,28 +29,20 @@ public class Conta extends AbstractBaseEntity{
     public void setNrConta(String nrConta) {
         this.nrConta = nrConta;
     }
-
-    public String getAgencia() {
-        return agencia;
-    }
-
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
-    }
-
-    public int getDigito() {
+    
+    public String getDigito() {
         return digito;
     }
 
-    public void setDigito(int digito) {
+    public void setDigito(String digito) {
         this.digito = digito;
     }
 
-    public String getTipo() {
+    public TipoContaEnum getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoContaEnum tipo) {
         this.tipo = tipo;
     }
 
@@ -50,15 +52,7 @@ public class Conta extends AbstractBaseEntity{
 
     public void setSaldo(double saldo) {
         this.saldo = saldo;
-    }
-    
-    public Banco getBanco() {
-        return banco;
-    }
-
-    public void setBanco(Banco banco) {
-        this.banco = banco;
-    }
+    }   
 
     public Pessoa getPessoa() {
         return pessoa;
@@ -68,10 +62,20 @@ public class Conta extends AbstractBaseEntity{
         this.pessoa = pessoa;
     }
 
+    public Agencia getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(Agencia agencia) {
+        this.agencia = agencia;
+    }
+
     @Override
     public String toString() {
-        return "Conta{" + "nrConta=" + nrConta + ", agencia=" + agencia + ", digito=" + digito + ", tipo=" + tipo + ", saldo=" + saldo + ", banco=" + banco + ", pessoa=" + pessoa + '}';
+        return "Conta{" + "nrConta=" + nrConta + ", digito=" + digito + ", tipo=" + tipo + ", saldo=" + saldo + ", agencia=" + agencia + ", pessoa=" + pessoa + '}';
     }
+
+    
 
     
     
