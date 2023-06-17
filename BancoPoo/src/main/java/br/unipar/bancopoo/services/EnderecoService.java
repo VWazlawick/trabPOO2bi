@@ -26,14 +26,16 @@ public class EnderecoService {
         if(endereco.getNrCasa().length()>10){
             throw new MaximoTamanhoException("Número da casa", 10);
         }
-        if(endereco.getCep().length()!=10){
+        if(endereco.getCep().length()!=9){
             throw new CaracteresInvalidosException("CEP", 10);
         }
         if(endereco.getNmBairro().length()>60){
             throw new MaximoTamanhoException("Nome do Bairro", 60);
         }
-        if(endereco.getDsComplemente().length()>60){
-            throw new MaximoTamanhoException("Complemento", 60);
+        if(endereco.getDsComplemente()!=null){
+            if(endereco.getDsComplemente().length()>60){
+                throw new MaximoTamanhoException("Complemento", 60);
+            }
         }
         if(endereco.getRa().length()!=8){
             throw new CaracteresInvalidosException("RA", 6);

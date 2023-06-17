@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AgenciaDAO {
-    public static final String INSERT = "INSERT INTO agencia(id,codigo,digito,razaosocial,cnpj,ra,banco_id)VALUES()";
+    public static final String INSERT = "INSERT INTO agencia(id,codigo,digito,razaosocial,cnpj,ra,banco_id)VALUES(?,?,?,?,?,?,?)";
     public static final String UPDATE = "UPDATE agencia SET codigo=?,digito=?,razaosocial=?,cnpj=?,ra=?,banco_id=? WHERE id=?";
     public static final String DELETE = "DELETE FROM agencia WHERE id=?";
     public static final String FIND_ALL = "SELECT id,codigo,digito,razaosocial,cpj,ra,banco_id FROM agencia";
-    public static final String FIND_BY_ID = "SELECT codigo,digito,razaosocial,cnpj,ra,banco_id FROM agencia WHERE=?";
+    public static final String FIND_BY_ID = "SELECT id,codigo,digito,razaosocial,cnpj,ra,banco_id FROM agencia WHERE id=?";
     
     public void insert(Agencia agencia)throws SQLException{
         Connection conn = null;
@@ -140,6 +140,7 @@ public class AgenciaDAO {
             while(rs.next()){
                 retorno = new Agencia();
                 
+                retorno.setId(rs.getInt("id"));
                 retorno.setCodigo(rs.getString("codigo"));
                 retorno.setDigito(rs.getString("digito"));
                 retorno.setRazaoSocial(rs.getString("razaosocial"));

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +14,10 @@ public class PessoaFisicaDAO {
 
     public static final String INSERT = "INSERT INTO pessoafisica(nome,cpf,rg,datanascimento,pessoa_id) VALUES"
             + "(?,?,?,?,?)";
-    public static final String UPDATE = "UPDATE pessoafisica SET nome=?,cpf=?,rg=?,datanascimento=? WHERE pessoa_id =?";
+    public static final String UPDATE = "UPDATE pessoafisica SET nome=?,cpf=?,rg=?,datanascimento=?,pessoa_id WHERE pessoa_id =?";
     public static final String DELETE = "DELETE FROM pessoafisica WHERE pessoa_id = ?";
     public static final String FIND_ALL = "SELECT nome,cpf,rg,datanascimento,pessoa_id FROM pessoafisica";
-    public static final String FIND_BY_ID = "SEELECT nome,cpf,rg,datanascimento FROM pessoafisica WHERE pessoa_id = ?";
+    public static final String FIND_BY_ID = "SELECT nome,cpf,rg,datanascimento FROM pessoafisica WHERE pessoa_id = ?";
     
     public void insert(PessoaFisica pessoaFisica) throws SQLException{
         Connection conn = null;
@@ -24,11 +25,12 @@ public class PessoaFisicaDAO {
         
         try {
             conn = new DataBaseUtils().getConnection();
-            pstmt = conn.prepareStatement(INSERT);
+            pstmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = pstmt.getGeneratedKeys();
             pstmt.setString(1, pessoaFisica.getNmPessoa());
             pstmt.setString(2, pessoaFisica.getCpf());
             pstmt.setString(3, pessoaFisica.getRg());
-            pstmt.setString(4, pessoaFisica.getDtnasc());
+            pstmt.setDate(4, pessoaFisica.getDtnasc());
             pstmt.setInt(5, pessoaFisica.getId());
             
             pstmt.executeUpdate();
@@ -53,7 +55,7 @@ public class PessoaFisicaDAO {
             pstmt.setString(1, pessoaFisica.getNmPessoa());
             pstmt.setString(2, pessoaFisica.getCpf());
             pstmt.setString(3, pessoaFisica.getRg());
-            pstmt.setString(4, pessoaFisica.getDtnasc());
+            pstmt.setDate(4, pessoaFisica.getDtnasc());
             pstmt.setInt(5, pessoaFisica.getId());
             
             pstmt.executeUpdate();
@@ -84,7 +86,7 @@ public class PessoaFisicaDAO {
                 pessoaFisica.setNmPessoa(rs.getString("nome"));
                 pessoaFisica.setCpf(rs.getString("cpf"));
                 pessoaFisica.setRg(rs.getString("rg"));
-                pessoaFisica.setDtnasc(rs.getString("datanascimento"));
+                pessoaFisica.setDtnasc(rs.getDate("datanascimento"));
                 pessoaFisica.setId(rs.getInt("pessoa_id"));
                 
                 retorno.add(pessoaFisica);
@@ -118,7 +120,7 @@ public class PessoaFisicaDAO {
                 retorno.setNmPessoa(rs.getString("nome"));
                 retorno.setCpf(rs.getString("cpf"));
                 retorno.setRg(rs.getString("rg"));
-                retorno.setDtnasc(rs.getString("datanascimento"));
+                retorno.setDtnasc(rs.getDate("datanascimento"));
             }
         } finally {
             if(pstmt!=null){

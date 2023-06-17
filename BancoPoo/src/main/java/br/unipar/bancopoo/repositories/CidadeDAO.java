@@ -94,7 +94,6 @@ public class CidadeDAO{
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        
         try {
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(FIND_ALL);

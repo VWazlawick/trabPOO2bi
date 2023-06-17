@@ -1,17 +1,17 @@
 package br.unipar.bancopoo.Enums;
 
 public enum TipoContaEnum {
-    CONTA_CORRENTE("1"),
-    POUPANCA("2"),
-    SALARIO("3");
+    CONTA_CORRENTE(1),
+    POUPANCA(2),
+    SALARIO(3);
     
-    private String codigo;
+    private int codigo;
 
-    private TipoContaEnum(String codigo) {
+    private TipoContaEnum(int codigo) {
         this.codigo = codigo;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
     

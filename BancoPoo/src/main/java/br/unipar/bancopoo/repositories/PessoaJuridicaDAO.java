@@ -140,7 +140,7 @@ public class PessoaJuridicaDAO {
                 retorno.setRazaoSocial(rs.getString("razaosocial"));
                 retorno.setCnpj(rs.getString("cnpj"));
                 retorno.setCnaePrincipal(rs.getString("cnaeprincipal"));
-                retorno.setFantasia(rs.getString("fantasi"));
+                retorno.setFantasia(rs.getString("fantasia"));
             }
         } finally {
             if(pstmt!=null){

@@ -29,9 +29,17 @@ public class TelefoneDAO {
             
             pstmt.setString(1, telefone.getNrTelefone());
             pstmt.setInt(2, telefone.getOperadora().getCodigo());            
-            pstmt.setString(3, telefone.getRa());            
-            pstmt.setInt(4, telefone.getAgencia().getId());            
-            pstmt.setInt(5, telefone.getPessoa().getId());            
+            pstmt.setString(3, telefone.getRa());       
+            if(telefone.getAgencia()!=null){
+                pstmt.setInt(4, telefone.getAgencia().getId());   
+            }else{
+                pstmt.setObject(4, null);
+            }    
+            if(telefone.getPessoa()!=null){
+                pstmt.setInt(5, telefone.getPessoa().getId());   
+            }else{
+                pstmt.setObject(5, null);
+            }
             
             pstmt.executeUpdate();
         } finally {
@@ -52,11 +60,18 @@ public class TelefoneDAO {
             pstmt = conn.prepareStatement(UPDATE);
             
             pstmt.setString(1, telefone.getNrTelefone());
-            pstmt.setInt(2, telefone.getOperadora().getCodigo());
-            pstmt.setString(3, telefone.getRa());
-            pstmt.setInt(4, telefone.getAgencia().getId());
-            pstmt.setInt(5, telefone.getPessoa().getId());
-            pstmt.setInt(5, telefone.getId());
+            pstmt.setInt(2, telefone.getOperadora().getCodigo());            
+            pstmt.setString(3, telefone.getRa());       
+            if(telefone.getAgencia()!=null){
+                pstmt.setInt(4, telefone.getAgencia().getId());   
+            }else{
+                pstmt.setObject(4, null);
+            }    
+            if(telefone.getPessoa()!=null){
+                pstmt.setInt(5, telefone.getPessoa().getId());   
+            }else{
+                pstmt.setObject(5, null);
+            }
             
             
             pstmt.executeUpdate();
@@ -105,15 +120,16 @@ public class TelefoneDAO {
                 
                 telefone.setId(rs.getInt("id"));
                 telefone.setNrTelefone(rs.getString("numero"));
-                if(rs.getString("operadora")=="41"){
+                if(rs.getString("operadora").equals("41") || rs.getString("operadora").equals("44")){
                     telefone.setOperadora(OperadoraEnum.TIM);
-                }else if(rs.getString("operadora")=="15"){
+                }else if(rs.getString("operadora").equals("15")){
                     telefone.setOperadora(OperadoraEnum.VIVO);
-                }else if(rs.getString("operadora")=="21"){
+                }else if(rs.getString("operadora").equals("21")){
                     telefone.setOperadora(OperadoraEnum.CLARO);
-                }else if(rs.getString("operadora")=="31"){
+                }else if(rs.getString("operadora").equals("31")){
                     telefone.setOperadora(OperadoraEnum.OI);
                 }
+                telefone.setRa(rs.getString("ra"));
                 telefone.setAgencia(new AgenciaDAO().findById(rs.getInt("agencia_id")));
                 telefone.setPessoa(new  PessoaDAO().findById(rs.getInt("pessoa_id")));
                 
@@ -144,18 +160,20 @@ public class TelefoneDAO {
             
             while(rs.next()){
                 retorno = new Telefone();
+                
                 retorno.setNrTelefone(rs.getString("numero"));
-                if(rs.getString("operadora")=="41"){
+                if(rs.getString("operadora").equals("41") || rs.getString("operadora").equals("44")){
                     retorno.setOperadora(OperadoraEnum.TIM);
-                }else if(rs.getString("operadora")=="15"){
+                }else if(rs.getString("operadora").equals("15")){
                     retorno.setOperadora(OperadoraEnum.VIVO);
-                }else if(rs.getString("operadora")=="21"){
+                }else if(rs.getString("operadora").equals("21")){
                     retorno.setOperadora(OperadoraEnum.CLARO);
-                }else if(rs.getString("operadora")=="31"){
+                }else if(rs.getString("operadora").equals("31")){
                     retorno.setOperadora(OperadoraEnum.OI);
                 }
+                retorno.setRa(rs.getString("ra"));
                 retorno.setAgencia(new AgenciaDAO().findById(rs.getInt("agencia_id")));
-                retorno.setPessoa(new PessoaDAO().findById(rs.getInt("pessoa_id")));
+                retorno.setPessoa(new  PessoaDAO().findById(rs.getInt("pessoa_id")));
             }
         } finally {
             if(pstmt!=null){

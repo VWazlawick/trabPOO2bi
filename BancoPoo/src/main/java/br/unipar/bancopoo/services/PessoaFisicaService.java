@@ -29,13 +29,13 @@ public class PessoaFisicaService {
         if(pessoaFisica.getNmPessoa().length()>60){
             throw new MaximoTamanhoException("Nome da Pessoa", 60);
         }
-        if(pessoaFisica.getCpf().length()==14){
+        if(pessoaFisica.getCpf().length()>14){
             throw new CaracteresInvalidosException("CPF", 14);
         }
-        if(pessoaFisica.getDtnasc().length()==10){
-            throw new CaracteresInvalidosException("Data de Nascimento", 10);
+        if(pessoaFisica.getDtnasc()==null){
+            throw new CampoNaoInformadaException("Data de Nacimento");
         }
-        if(pessoaFisica.getRg().length()==12){
+        if(pessoaFisica.getRg().length()>12){
             throw new CaracteresInvalidosException("RG", 12);
         }
         if(pessoaFisica.getEmail().length()>60){
@@ -61,6 +61,9 @@ public class PessoaFisicaService {
     }
     public void insert(PessoaFisica pessoaFisica) throws EntidadeInvalidoException, SQLException, CampoNaoInformadaException, MaximoTamanhoException, CaracteresInvalidosException{
         validar(pessoaFisica);
+        PessoaService ps = new PessoaService();
+        ps.insert(pessoaFisica);
+        
         PessoaFisicaDAO pessoaFisicaDAO = new PessoaFisicaDAO();
         pessoaFisicaDAO.insert(pessoaFisica);
     }

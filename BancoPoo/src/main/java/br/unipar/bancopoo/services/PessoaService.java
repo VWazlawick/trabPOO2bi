@@ -5,20 +5,21 @@ import br.unipar.bancopoo.exceptions.EntidadeInvalidoException;
 import br.unipar.bancopoo.exceptions.IdInvalidoException;
 import br.unipar.bancopoo.exceptions.MaximoTamanhoException;
 import br.unipar.bancopoo.exceptions.NaoEncontradoException;
+import br.unipar.bancopoo.models.PessoaFisica;
 import br.unipar.bancopoo.repositories.PessoaDAO;
 import java.sql.SQLException;
 import java.util.List;
 
 
 public class PessoaService {
-    public void validar(Pessoa pessoa) throws EntidadeInvalidoException, MaximoTamanhoException, CaracteresInvalidosException{
-        if(pessoa==null){
+    public void validar(PessoaFisica pessoaFisica) throws EntidadeInvalidoException, MaximoTamanhoException, CaracteresInvalidosException{
+        if(pessoaFisica==null){
             throw new EntidadeInvalidoException("Pessoa");
         }
-        if(pessoa.getRa().length()!=8){
+        if(pessoaFisica.getRa().length()!=8){
             throw new CaracteresInvalidosException("RA", 8);
         }
-        if(pessoa.getEmail().length()>60){
+        if(pessoaFisica.getEmail().length()>60){
             throw new MaximoTamanhoException("Email", 60);
         }
     }
@@ -39,15 +40,15 @@ public class PessoaService {
         }
         return retorno;
     }
-    public void insert(Pessoa pessoa) throws SQLException, EntidadeInvalidoException, MaximoTamanhoException, CaracteresInvalidosException{
-        validar(pessoa);
+    public void insert(PessoaFisica pessoaFisica) throws SQLException, EntidadeInvalidoException, MaximoTamanhoException, CaracteresInvalidosException{
+        validar(pessoaFisica);
         PessoaDAO pessoaDAO = new PessoaDAO();
-        pessoaDAO.insert(pessoa);
+        pessoaDAO.insert(pessoaFisica);
     }
-    public void update(Pessoa pessoa) throws SQLException, EntidadeInvalidoException, MaximoTamanhoException, CaracteresInvalidosException{
-        validar(pessoa);
+    public void update(PessoaFisica pessoaFisica) throws SQLException, EntidadeInvalidoException, MaximoTamanhoException, CaracteresInvalidosException{
+        validar(pessoaFisica);
         PessoaDAO pessoaDAO = new PessoaDAO();
-        pessoaDAO.update(pessoa);
+        pessoaDAO.update(pessoaFisica);
     }
     public void delete(int id)throws SQLException{
         PessoaDAO pessoaDAO = new PessoaDAO();

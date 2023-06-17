@@ -2,12 +2,14 @@ package br.unipar.bancopoo.repositories;
 
 import br.unipar.bancopoo.models.AbstractBaseEntity;
 import br.unipar.bancopoo.models.Pessoa;
+import br.unipar.bancopoo.models.PessoaFisica;
 import br.unipar.bancopoo.utils.DataBaseUtils;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,18 +21,22 @@ public class PessoaDAO{
     public static final String FIND_ALL = "SELECT id,email,ra FROM pessoa";
     public static final String DELETE = "DELETE FROM pessoa WHERE id=?";
     
-    public void insert(Pessoa pessoa) throws SQLException{
+    public void insert(PessoaFisica pessoaFisica) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
         
         try {
             conn = new DataBaseUtils().getConnection();
-            pstmt = conn.prepareStatement(INSERT);
+            pstmt = conn.prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);
             
-            pstmt.setString(1, pessoa.getEmail());
-            pstmt.setString(2, pessoa.getRa());
+            pstmt.setString(1, pessoaFisica.getEmail());
+            pstmt.setString(2, pessoaFisica.getRa());
             
             pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if(rs.next()){
+                pessoaFisica.setId(rs.getInt("id"));
+            }
         } finally {
             if(pstmt!=null){
                 pstmt.close();
@@ -41,7 +47,7 @@ public class PessoaDAO{
         }
     }
     
-    public void update(Pessoa pessoa) throws SQLException{
+    public void update(PessoaFisica pessoaFisica) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
         
@@ -49,9 +55,9 @@ public class PessoaDAO{
             conn = new DataBaseUtils().getConnection();
             pstmt = conn.prepareStatement(UPDATE);
             
-            pstmt.setString(1, pessoa.getEmail());
-            pstmt.setString(2, pessoa.getRa());
-            pstmt.setInt(3, pessoa.getId());
+            pstmt.setString(1, pessoaFisica.getEmail());
+            pstmt.setString(2, pessoaFisica.getRa());
+            pstmt.setInt(3, pessoaFisica.getId());
             
             pstmt.executeUpdate();
         }finally{

@@ -14,7 +14,7 @@ public class BancoDAO {
     public static final String UPDATE = "UPDATE banco SET nome=?,ra=? WHERE id=?";
     public static final String DELETE = "DELETE FROM banco WHERE id=?";
     public static final String FIND_ALL = "SELECT id,nome,ra FROM banco";
-    public static final String FIND_BY_ID = "SELECT nome,ra FROM banco WHERE id=?";
+    public static final String FIND_BY_ID = "SELECT id,nome,ra FROM banco WHERE id=?";
     
     public void insert(Banco banco)throws SQLException{
         Connection conn = null;
@@ -125,6 +125,7 @@ public class BancoDAO {
             
             while(rs.next()){
                 retorno = new Banco();
+                retorno.setId(rs.getInt("id"));
                 retorno.setNmBanco(rs.getString("nome"));
                 retorno.setRa(rs.getString("ra"));
             }

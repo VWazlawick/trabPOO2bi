@@ -84,7 +84,7 @@ public class EnderecoDAO{
                 retorno.setCep(rs.getString("cep"));
                 retorno.setDsComplemente(rs.getString("complemento"));
                 retorno.setRa(rs.getString("ra"));
-                retorno.setCidade(new CidadeDAO().findById(rs.getInt("cidade_int")));
+                retorno.setCidade(new CidadeDAO().findById(rs.getInt("cidade_id")));
                 
                 Pessoa pessoa = new Pessoa();
                 pessoa.setId(rs.getInt("pessoa_id"));

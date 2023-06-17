@@ -12,11 +12,11 @@ import java.util.List;
 
 public class TransacaoDAO {
     
-    public static final String INSERT = "INSERT INTO trasacao(datahora,valor,tipo,ra,conta_origem,conta_destino) VALUES(?,?,?,?,?,?)";
+    public static final String INSERT = "INSERT INTO transacao(datahora,valor,tipo,ra,conta_origem,conta_destino) VALUES(?,?,?,?,?,?)";
     public static final String UPDATE = "UPDATE transacao SET datahora=?,valor=?,tipo=?,ra=?,conta_origem=?,conta_destino=? WHERE id=?";
     public static final String DELETE = "DELETE FROM transacao WHERE id=?";
     public static final String FIND_ALL = "SELECT id,datahora,valor,tipo,ra,conta_origem,conta_destino FROM transacao";
-    public static final String FIND_BY_ID = "SEKECT datahora,valor,tipo,ra,conta_origem,conta_destino FROM transacao WHERE id=?";
+    public static final String FIND_BY_ID = "SELECT datahora,valor,tipo,ra,conta_origem,conta_destino FROM transacao WHERE id=?";
     
     public void insert(Transacao transacao)throws SQLException{
         Connection conn = null;

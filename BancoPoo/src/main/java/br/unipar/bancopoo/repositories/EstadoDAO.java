@@ -152,7 +152,6 @@ public class EstadoDAO{
 
                 retorno.add(estado);
             }
-            
         } finally {
             if(pstmt!=null){
                 pstmt.close();

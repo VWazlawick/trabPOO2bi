@@ -1,12 +1,13 @@
 package br.unipar.bancopoo.models;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class PessoaFisica extends Pessoa{
     private String nmPessoa;
     private String cpf;
     private String rg;
-    private String dtnasc;
+    private Date dtnasc;
 
     public PessoaFisica() {
     }
@@ -35,11 +36,11 @@ public class PessoaFisica extends Pessoa{
         this.rg = rg;
     }
 
-    public String getDtnasc() {
+    public Date getDtnasc() {
         return dtnasc;
     }
 
-    public void setDtnasc(String dtnasc) {
+    public void setDtnasc(Date dtnasc) {
         this.dtnasc = dtnasc;
     }
 

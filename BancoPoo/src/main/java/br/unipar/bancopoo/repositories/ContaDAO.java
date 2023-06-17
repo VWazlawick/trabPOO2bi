@@ -17,7 +17,7 @@ public class ContaDAO {
     public static final String UPDATE = "UPDATE conta SET numero=?,digito=?,saldo=?,tipo=?,ra=?,agencia_id=?,pessoa_id=? WHERE id=?";
     public static final String DELETE = "DELETE FROM conta WHERE id=?";
     public static final String FIND_ALL = "SELECT id,numero,digito,saldo,tipo,ra,agencia_id,pessoa_id FROM conta";
-    public static final String FIND_BY_ID = "SELECT numero,digito,saldo,tipo,ra,agencia_id,pessoa_id FROM conta WHERE id=?";
+    public static final String FIND_BY_ID = "SELECT id,numero,digito,saldo,tipo,ra,agencia_id,pessoa_id FROM conta WHERE id=?";
     
     public void insert(Conta conta)throws SQLException{
         Connection conn = null;
@@ -30,7 +30,7 @@ public class ContaDAO {
             pstmt.setString(1, conta.getNrConta());
             pstmt.setString(2, conta.getDigito());            
             pstmt.setDouble(3, conta.getSaldo());            
-            pstmt.setString(4, conta.getTipo().getCodigo());                      
+            pstmt.setInt(4, conta.getTipo().getCodigo());                      
             pstmt.setString(5, conta.getRa());                      
             pstmt.setInt(6, conta.getAgencia().getId());
             pstmt.setInt(7, conta.getPessoa().getId());                      
@@ -56,7 +56,7 @@ public class ContaDAO {
             pstmt.setString(1, conta.getNrConta());
             pstmt.setString(2, conta.getDigito());            
             pstmt.setDouble(3, conta.getSaldo());            
-            pstmt.setString(4, conta.getTipo().getCodigo());                      
+            pstmt.setInt(4, conta.getTipo().getCodigo());                      
             pstmt.setString(5, conta.getRa());                      
             pstmt.setInt(6, conta.getAgencia().getId());
             pstmt.setInt(7, conta.getPessoa().getId()); 
@@ -111,11 +111,11 @@ public class ContaDAO {
                 conta.setNrConta(rs.getString("numero"));
                 conta.setDigito(rs.getString("digito"));
                 conta.setSaldo(rs.getDouble("saldo"));
-                if(rs.getString("tipo").equals("1")){
+                if(rs.getInt("tipo")==1){
                     conta.setTipo(TipoContaEnum.CONTA_CORRENTE);
-                }else if(rs.getString("tipo").equals("2")){
+                }else if(rs.getInt("tipo")==2){
                     conta.setTipo(TipoContaEnum.POUPANCA);
-                }else if(rs.getString("tipo").equals("3")){
+                }else if(rs.getInt("tipo")==3){
                     conta.setTipo(TipoContaEnum.SALARIO);
                 }
                 conta.setRa(rs.getString("ra"));
@@ -150,6 +150,7 @@ public class ContaDAO {
             while(rs.next()){
                 retorno = new Conta();
                 
+                retorno.setId(rs.getInt("id"));
                 retorno.setNrConta(rs.getString("numero"));
                 retorno.setDigito(rs.getString("digito"));
                 retorno.setSaldo(rs.getDouble("saldo"));

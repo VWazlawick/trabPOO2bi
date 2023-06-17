@@ -16,9 +16,6 @@ public class AgenciaService {
         if(agencia==null){
             throw new EntidadeInvalidoException("Agencia");
         }
-        if(agencia.getId()<=0){
-            throw new IdInvalidoException("ID");
-        }
         if(agencia.getCodigo()==null || agencia.getCodigo().isBlank() || agencia.getCodigo().isEmpty()){
             throw new CampoNaoInformadaException("Código");
         }
